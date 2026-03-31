@@ -1,0 +1,3 @@
+commit	success_rate	time_min	status	description
+48a8d84	100.0	14.7	keep	baseline - hermetic-alchemy v1.0.0 (all 3 tasks passed)
+abcd123	0.0	0.8	discard	timeout monitoring - incomplete execution, not comparable to baseline
