@@ -181,9 +181,9 @@ User Request: "Build X"
 
 **Element:** Salt (preservation, permanence)  
 **Role:** Database schema, migrations, optimization  
-**Max turns:** 40 | Timeout: 400 seconds
+**Max turns:** 50 | Timeout: 400 seconds
 
-**Motto:** "Permanence through structure"
+**Motto:** \"Permanence through structure\"
 
 **Tasks:**
 1. Read Citrinitas database design
