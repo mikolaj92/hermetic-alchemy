@@ -204,9 +204,9 @@ User Request: "Build X"
 **Element:** Water (adaptability, cleansing)  
 **Process:** Ablution (washing away impurities)  
 **Role:** Refactor code, add tests, optimize  
-**Max turns:** 50 | Timeout: 600 seconds
+**Max turns:** 60 | Timeout: 600 seconds
 
-**Motto:** "Purity emerges from discipline"
+**Motto:** \"Purity emerges from discipline\"
 
 **Tasks:**
 1. Review code from transmutation phase
