@@ -225,7 +225,7 @@ User Request: "Build X"
 
 **Element:** Sulfur (reactivity, validation)  
 **Role:** Test, audit, security review  
-**Max turns:** 45 | Timeout: 450 seconds
+**Max turns:** 55 | Timeout: 450 seconds
 
 **Motto:** "I reveal what is hidden"
 
@@ -278,7 +278,7 @@ User Request: "Build X"
 
 **Element:** Aether (connection, medium)  
 **Role:** System integration, CI/CD, infrastructure  
-**Max turns:** 55 | Timeout: 700 seconds
+**Max turns:** 65 | Timeout: 700 seconds
 
 **Motto:** "All is connected"
 
@@ -299,7 +299,7 @@ User Request: "Build X"
 **Element:** Fire (transformation, energy)  
 **Process:** Coagulation (bringing together)  
 **Role:** Final integration, deployment, production readiness  
-**Max turns:** 60 | Timeout: 900 seconds
+**Max turns:** 70 | Timeout: 900 seconds
 
 **Motto:** "From chaos, gold emerges"
 
