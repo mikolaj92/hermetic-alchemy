@@ -1,0 +1,2 @@
+commit	success_rate	time_min	score	status	description
+5b717a5	100.0	2.6	95.0	keep	exp1/mercurius - max_turns 50→60: Production ready API, 17 endpoints, 748 LOC
