@@ -133,12 +133,12 @@ User Request: "Build X"
 
 ---
 
-### 🧪 MERCURIUS - Backend Alchemist
+### 🧪 MERCURIUS - The Backend Alchemist
 
-**Element:** Mercury (fluid transformation)  
-**Role:** Build APIs, databases, authentication  
-**Max turns:** 50 | Timeout: 600 seconds
-
+**Element:** Mercury (adaptability, transformation)  
+**Process:** Distillation (extracting backend essence)  
+**Role:** Build backend APIs, database models, business logic  
+**Max turns:** 60 | Timeout: 600 seconds
 **Motto:** "Fluid transformation"
 
 **Tasks:**
