@@ -1,0 +1,35 @@
+name: hermetic-alchemy
+version: 1.0.0
+description: Multi-agent orchestration through alchemical transformation - the Magnum Opus workflow through 10 specialized agents (Nigredo, Citrinitas, Mercurius, Sol, Sal, Albedo, Sulfur, Aether, Rubedo, Hermes Trismegistus) for autonomous software development with feedback loops
+author: Mikołaj (mikolaj92)
+license: MIT
+homepage: https://github.com/mikolaj92/hermetic-alchemy
+repository: https://github.com/mikolaj92/hermetic-alchemy
+tags:
+  - multi-agent
+  - orchestration
+  - autonomous
+  - hermetic
+  - alchemy
+  - magnum-opus
+  - feedback-loop
+  - slash-command
+  - transmute
+  - forge
+  - agent-swarm
+  - autonomous-development
+  - quality-gates
+category: autonomous-ai-agents
+triggers:
+  - "/transmute"
+  - "/hermetic"
+  - "transmute"
+  - "hermetic alchemy"
+  - "forge software"
+  - "start the magnum opus"
+hermes_version: ">=0.6.0"
+dependencies: []
+related_skills:
+  - subagent-driven-development
+  - hermes-agent
+  - multi-agent-harness

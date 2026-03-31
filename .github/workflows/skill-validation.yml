@@ -1,0 +1,165 @@
+name: Skill Validation
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main, develop ]
+
+jobs:
+  validate-skill:
+    runs-on: ubuntu-latest
+    name: Validate Hermetic Alchemy Skill
+    
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+      
+    - name: Validate YAML frontmatter
+      run: |
+        echo "Validating SKILL.md YAML frontmatter..."
+        python3 << 'EOF'
+        import re
+        import yaml
+        
+        with open('skills/hermetic-alchemy/SKILL.md', 'r') as f:
+            content = f.read()
+        
+        # Extract YAML frontmatter
+        match = re.match(r'^---\n(.*?)\n---', content, re.DOTALL)
+        if not match:
+            print("ERROR: No YAML frontmatter found")
+            exit(1)
+        
+        yaml_content = match.group(1)
+        
+        try:
+            metadata = yaml.safe_load(yaml_content)
+            print("✓ YAML frontmatter is valid")
+            print(f"  Name: {metadata.get('name')}")
+            print(f"  Version: {metadata.get('version')}")
+            print(f"  Author: {metadata.get('author')}")
+        except yaml.YAMLError as e:
+            print(f"ERROR: Invalid YAML: {e}")
+            exit(1)
+        EOF
+    
+    - name: Check required files
+      run: |
+        echo "Checking required files..."
+        required_files=(
+          "skills/hermetic-alchemy/SKILL.md"
+          "skills/hermetic-alchemy/skill.yaml"
+          "README.md"
+          "LICENSE"
+          "CHANGELOG.md"
+          "CONTRIBUTING.md"
+        )
+        
+        missing=0
+        for file in "${required_files[@]}"; do
+          if [ -f "$file" ]; then
+            echo "✓ $file"
+          else
+            echo "✗ $file (missing)"
+            missing=$((missing + 1))
+          fi
+        done
+        
+        if [ $missing -gt 0 ]; then
+          echo "ERROR: $missing required file(s) missing"
+          exit 1
+        fi
+    
+    - name: Validate skill.yaml
+      run: |
+        echo "Validating skill.yaml..."
+        python3 << 'EOF'
+        import yaml
+        
+        with open('skills/hermetic-alchemy/skill.yaml', 'r') as f:
+            config = yaml.safe_load(f)
+        
+        required_fields = ['name', 'version', 'description', 'author', 'license']
+        missing = [field for field in required_fields if field not in config]
+        
+        if missing:
+            print(f"ERROR: Missing required fields: {missing}")
+            exit(1)
+        
+        print("✓ skill.yaml is valid")
+        print(f"  Name: {config['name']}")
+        print(f"  Version: {config['version']}")
+        print(f"  Tags: {', '.join(config.get('tags', []))}")
+        EOF
+    
+    - name: Check documentation links
+      run: |
+        echo "Checking documentation links..."
+        if [ -f "README.md" ]; then
+          # Check for broken markdown links (basic check)
+          if grep -qE '\[.*\]\(\s*\)' README.md; then
+            echo "WARNING: Empty markdown links found"
+          else
+            echo "✓ No empty markdown links"
+          fi
+        fi
+    
+    - name: Validate examples
+      run: |
+        echo "Validating examples..."
+        for example in examples/*.md; do
+          if [ -f "$example" ]; then
+            echo "✓ $example"
+            # Check for code blocks
+            if ! grep -q '```' "$example"; then
+              echo "  WARNING: No code blocks found"
+            fi
+          fi
+        done
+    
+    - name: Check formatting
+      run: |
+        echo "Checking file formatting..."
+        
+        # Check for trailing whitespace
+        if grep -r '[[:space:]]$' skills/ --exclude-dir=.git; then
+          echo "WARNING: Trailing whitespace found"
+        else
+          echo "✓ No trailing whitespace"
+        fi
+        
+        # Check for mixed line endings
+        if file $(find skills/ -type f) | grep -q CRLF; then
+          echo "WARNING: CRLF line endings found"
+        else
+          echo "✓ No CRLF line endings"
+        fi
+    
+    - name: Spell check README
+      run: |
+        echo "Running basic spell check on README..."
+        # Check for common typos
+        typos="teh teh teh recieve recieve seperate seperate"
+        for typo in $typos; do
+          if grep -qi "$typo" README.md; then
+            echo "WARNING: Possible typo '$typo' found in README.md"
+          fi
+        done
+        echo "✓ Spell check complete"
+    
+    - name: Summary
+      run: |
+        echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+        echo "  ⚗️ Hermetic Alchemy Skill Validation Complete ⚗️  "
+        echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+        echo ""
+        echo "✓ All validations passed!"
+        echo ""
+        echo "Ready to publish to skills.sh"
+        echo ""
+        echo "Install with:"
+        echo "  hermes skills install mikolaj92/hermetic-alchemy"
+        echo ""
+        echo "ALL HAIL HERMES TRISMEGISTUS! ✨"
+        echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
