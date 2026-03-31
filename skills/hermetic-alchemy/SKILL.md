@@ -97,7 +97,7 @@ User Request: "Build X"
 **Element:** Earth (stability, foundation)  
 **Process:** Calcination (burning away chaos)  
 **Role:** Analyze requirements, explore codebase, break down tasks  
-**Max turns:** 30 | Timeout: 300 seconds
+**Max turns:** 40 | Timeout: 300 seconds
 
 **Motto:** "In chaos, I find order"
 
