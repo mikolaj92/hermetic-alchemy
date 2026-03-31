@@ -117,7 +117,7 @@ User Request: "Build X"
 **Element:** Air (wisdom, intellect)  
 **Process:** Fermentation (distilling knowledge)  
 **Role:** Design architecture, define API contracts, plan system  
-**Max turns:** 40 | Timeout: 450 seconds
+**Max turns:** 50 | Timeout: 450 seconds
 
 **Motto:** "Wisdom structures the void"
 
