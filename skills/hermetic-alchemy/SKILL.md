@@ -159,9 +159,9 @@ User Request: "Build X"
 
 **Element:** Sun (light, visibility)  
 **Role:** Build UI/UX, frontend frameworks  
-**Max turns:** 50 | Timeout: 600 seconds
+**Max turns:** 60 | Timeout: 600 seconds
 
-**Motto:** "Light reveals beauty"
+**Motto:** \"Light reveals beauty\"
 
 **Tasks:**
 1. Read Citrinitas design
