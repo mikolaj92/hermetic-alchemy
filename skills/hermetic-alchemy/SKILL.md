@@ -1,7 +1,7 @@
 ---
 name: hermetic-alchemy
-description: **HERMETIC MULTI-AGENT ORCHESTRATION** - The Magnum Opus workflow through 10 alchemical agents. Trigger by typing `/transmute [project]` or `/hermetic [project]`. Spawns Nigredo (analysis), Citrinitas (design), Mercurius (backend), Sol (frontend), Sal (database), Albedo (refinement), Sulfur (quality), Aether (integration), Rubedo (final), and Hermes Trismegistus (orchestrator) for autonomous software development with feedback loops. Use when user wants to "transmute", "forge", or "create" software.
-version: 1.0.0
+description: "Multi-agent orchestration through alchemical transformation. The Magnum Opus workflow through 10 alchemical agents. Trigger by typing /transmute [project] or /hermetic [project]. Spawns Nigredo (analysis), Citrinitas (design), Mercurius (backend), Sol (frontend), Sal (database), Albedo (refinement), Sulfur (quality), Aether (integration), Rubedo (final), and Hermes Trismegistus (orchestrator) for autonomous software development with feedback loops. Use when the user wants to transmute, forge, or create software."
+version: 1.0.1
 author: Mikołaj (mikolaj92)
 license: MIT
 metadata:

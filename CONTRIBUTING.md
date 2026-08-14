@@ -107,10 +107,11 @@ metadata:
 ```
 
 When modifying:
-1. Keep YAML frontmatter valid
-2. Update version number (semver)
-3. Add clear descriptions
-4. Include examples
+1. Keep YAML frontmatter valid (the skills.sh CLI rejects the skill if `name`/`description` cannot be parsed)
+2. Quote `description` when it contains YAML-special characters (`*`, `:`, `#`)
+3. Update version number (semver)
+4. Add clear descriptions
+5. Include examples
 
 ## Testing
 
