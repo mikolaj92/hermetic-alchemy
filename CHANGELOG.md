@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed
+- Valid YAML frontmatter in `skills/hermetic-alchemy/SKILL.md` so `npx skills add mikolaj92/hermetic-alchemy` discovers the skill (unquoted `**...**` made the skills.sh CLI report no valid skills and 404 the registry page)
+- Documented the skills.sh install command (`npx skills add mikolaj92/hermetic-alchemy -a hermes-agent -g`) instead of the non-working `hermes skills install` path
+
 ### Planned
 - Web UI for monitoring alchemical transformations
 - Support for more database backends (MongoDB, Redis)
