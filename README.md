@@ -12,11 +12,11 @@ Spawn 10 specialized alchemical agents that work together to transmute your requ
 ### Installation
 
 ```bash
-# Install the skill from GitHub
-hermes skills install mikolaj92/hermetic-alchemy
+# Install from this GitHub repo (not listed on skills.sh)
+npx skills add mikolaj92/hermetic-alchemy -a hermes-agent -g
 
-# Or install with URL
-hermes skills install https://github.com/mikolaj92/hermetic-alchemy
+# Or install with the GitHub URL
+npx skills add https://github.com/mikolaj92/hermetic-alchemy -a hermes-agent -g
 ```
 
 ### Usage
@@ -299,14 +299,16 @@ When stuck or critical issues:
 
 ## 📦 Installation Methods
 
-### Method 1: From skills.sh (Recommended)
+### Method 1: From GitHub (Recommended)
 ```bash
-hermes skills install mikolaj92/hermetic-alchemy
+npx skills add mikolaj92/hermetic-alchemy -a hermes-agent -g
 ```
+
+This clones the public GitHub repo. The skill is not listed at [skills.sh/mikolaj92/hermetic-alchemy](https://www.skills.sh/mikolaj92/hermetic-alchemy) (HTTP 404).
 
 ### Method 2: From GitHub URL
 ```bash
-hermes skills install https://github.com/mikolaj92/hermetic-alchemy
+npx skills add https://github.com/mikolaj92/hermetic-alchemy -a hermes-agent -g
 ```
 
 ### Method 3: Manual

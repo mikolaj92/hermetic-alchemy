@@ -7,6 +7,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed
+- Quoted `SKILL.md` frontmatter so the skills CLI can parse the skill, and documented GitHub install (`npx skills add`) instead of a skills.sh registry listing that 404s
+
 ### Planned
 - Web UI for monitoring alchemical transformations
 - Support for more database backends (MongoDB, Redis)
