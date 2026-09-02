@@ -1,7 +1,7 @@
 ---
 name: hermetic-alchemy
-description: "Multi-agent orchestration through alchemical transformation. The Magnum Opus workflow through 10 alchemical agents. Trigger by typing /transmute [project] or /hermetic [project]. Spawns Nigredo (analysis), Citrinitas (design), Mercurius (backend), Sol (frontend), Sal (database), Albedo (refinement), Sulfur (quality), Aether (integration), Rubedo (final), and Hermes Trismegistus (orchestrator) for autonomous software development with feedback loops. Use when the user wants to transmute, forge, or create software."
-version: 1.0.1
+description: "Multi-agent orchestration through alchemical transformation. The Magnum Opus workflow through 8 specialized child agents coordinated by the host. Trigger by typing /transmute [project] or /hermetic [project]. Spawns Nigredo (analysis), Citrinitas (design), Mercurius (backend), Sol (frontend), Sal (database), Albedo (refinement), Sulfur (quality), and Rubedo (final); the host is Hermes Trismegistus for autonomous software development with feedback loops. Use when the user wants to transmute, forge, or create software."
+version: 1.0.2
 author: Mikołaj (mikolaj92)
 license: MIT
 metadata:
@@ -90,7 +90,7 @@ User Request: "Build X"
                                 → Merge winner
 ```
 
-## The 10 Hermetic Agents
+## Eight Child Agents and the Host Orchestrator
 
 ### ⚫ NIGREDO - The Decomposer
 
@@ -274,26 +274,6 @@ User Request: "Build X"
 
 ---
 
-### 🌀 AETHER - Integration Weaver
-
-**Element:** Aether (connection, medium)  
-**Role:** System integration, CI/CD, infrastructure  
-**Max turns:** 65 | Timeout: 700 seconds
-
-**Motto:** "All is connected"
-
-**Tasks:**
-1. Integrate microservices
-2. Set up CI/CD pipelines
-3. Configure infrastructure
-4. Implement monitoring
-5. Set up logging
-6. Deployment automation
-
-**Skills:** devops/webhook-subscriptions, mlops/cloud/lambda-labs, mlops/cloud/modal, github/github-repo-management
-
----
-
 ### 🔴 RUBEDO - The Creator
 
 **Element:** Fire (transformation, energy)  
@@ -339,9 +319,7 @@ User Request: "Build X"
 ### 🧠 HERMES TRISMEGISTUS - Grand Orchestrator
 
 **Element:** Quintessence (all elements combined)  
-**Role:** Master coordinator, manages all agents  
-**Max turns:** 100 | Timeout: 1800 seconds
-
+**Role:** Host orchestrator; this role is not delegated as a child
 **Motto:** "Thrice Great"
 
 **Tasks:**
@@ -716,31 +694,28 @@ feedback_loop:
 # Agent configurations
 agents:
   nigredo:
-    max_turns: 30
+    max_turns: 40
     timeout: 300
   citrinitas:
-    max_turns: 40
+    max_turns: 50
     timeout: 450
   mercurius:
-    max_turns: 50
+    max_turns: 60
     timeout: 600
   sol:
-    max_turns: 50
+    max_turns: 60
     timeout: 600
   sal:
-    max_turns: 40
+    max_turns: 50
     timeout: 400
   albedo:
-    max_turns: 50
+    max_turns: 60
     timeout: 600
   sulfur:
-    max_turns: 45
-    timeout: 450
-  aether:
     max_turns: 55
-    timeout: 700
+    timeout: 450
   rubedo:
-    max_turns: 60
+    max_turns: 70
     timeout: 900
 
 # Memory and persistence

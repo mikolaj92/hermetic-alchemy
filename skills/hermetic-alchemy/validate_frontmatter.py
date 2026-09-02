@@ -1,67 +1,63 @@
 #!/usr/bin/env python3
-"""Fail if SKILL.md frontmatter is not valid YAML with name + description.
-
-The skills.sh CLI (`npx skills add`) skips skills whose frontmatter cannot be
-parsed. Unquoted markdown like `**bold**` is one known breaker.
-"""
+"""Validate the complete public skill manifest contract."""
 
 from __future__ import annotations
 
+import argparse
 from pathlib import Path
-import sys
 
-try:
-    import yaml
-except ImportError:  # pragma: no cover - stdlib fallback is enough for CI-less repos
-    yaml = None
-
+import yaml
 
 ROOT = Path(__file__).resolve().parent
-SKILL_MD = ROOT / "SKILL.md"
-MANIFEST = ROOT / "skill.yaml"
 
 
-def load_frontmatter(text: str) -> dict:
-    if not text.startswith("---\n"):
-        raise SystemExit("SKILL.md must start with YAML frontmatter (---)")
-    end = text.find("\n---\n", 3)
-    if end == -1:
-        raise SystemExit("SKILL.md is missing a closing frontmatter fence")
-    body = text[4:end]
-    if yaml is None:
-        data: dict = {}
-        for line in body.splitlines():
-            if not line or line.startswith(" ") or line.startswith("\t") or ":" not in line:
-                continue
-            key, value = line.split(":", 1)
-            data[key.strip()] = value.strip().strip('"').strip("'")
-        return data
+def load_mapping(path: Path) -> dict[str, object]:
     try:
-        data = yaml.safe_load(body)
+        data = yaml.safe_load(path.read_text(encoding="utf-8"))
     except yaml.YAMLError as exc:
-        raise SystemExit(f"SKILL.md frontmatter is invalid YAML: {exc}") from exc
+        raise SystemExit(f"{path.name} is invalid YAML: {exc}") from exc
     if not isinstance(data, dict):
-        raise SystemExit("SKILL.md frontmatter must be a mapping")
+        raise SystemExit(f"{path.name} must contain a YAML mapping")
     return data
 
 
-def main() -> int:
-    skill = load_frontmatter(SKILL_MD.read_text(encoding="utf-8"))
-    for key in ("name", "description"):
+def load_frontmatter(path: Path) -> dict[str, object]:
+    text = path.read_text(encoding="utf-8")
+    if not text.startswith("---\n"):
+        raise SystemExit("SKILL.md must start with YAML frontmatter (---)")
+    end = text.find("\n---\n", 4)
+    if end == -1:
+        raise SystemExit("SKILL.md is missing a closing frontmatter fence")
+    try:
+        data = yaml.safe_load(text[4:end])
+    except yaml.YAMLError as exc:
+        raise SystemExit(f"{path.name} is invalid YAML: {exc}") from exc
+    if not isinstance(data, dict):
+        raise SystemExit(f"{path.name} frontmatter must contain a YAML mapping")
+    return data
+
+
+def validate(skill_path: Path, manifest_path: Path) -> None:
+    skill = load_frontmatter(skill_path)
+    manifest = load_mapping(manifest_path)
+    for key in ("name", "description", "version"):
         value = skill.get(key)
         if not isinstance(value, str) or not value.strip():
             raise SystemExit(f"SKILL.md frontmatter is missing a string {key}")
+        if manifest.get(key) != value:
+            raise SystemExit(f"skill.yaml {key} does not match SKILL.md")
     if skill["name"] != "hermetic-alchemy":
         raise SystemExit(f"unexpected skill name: {skill['name']}")
-    if yaml is not None:
-        manifest = yaml.safe_load(MANIFEST.read_text(encoding="utf-8"))
-        if manifest.get("name") != skill["name"]:
-            raise SystemExit("skill.yaml name does not match SKILL.md")
-        if manifest.get("version") != skill.get("version"):
-            raise SystemExit("skill.yaml version does not match SKILL.md")
-    print(f"ok: {skill['name']} {skill.get('version', '')}".rstrip())
-    return 0
+    print(f"ok: {skill['name']} {skill['version']}")
+
+
+def main() -> None:
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--skill", type=Path, default=ROOT / "SKILL.md")
+    parser.add_argument("--manifest", type=Path, default=ROOT / "skill.yaml")
+    args = parser.parse_args()
+    validate(args.skill, args.manifest)
 
 
 if __name__ == "__main__":
-    sys.exit(main())
+    main()

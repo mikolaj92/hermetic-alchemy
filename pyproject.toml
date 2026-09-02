@@ -1,0 +1,17 @@
+[project]
+name = "hermetic-alchemy-contract"
+version = "1.0.2"
+requires-python = ">=3.11"
+dependencies = ["pyyaml>=6.0"]
+
+[dependency-groups]
+dev = ["pytest>=8.0"]
+
+[tool.lokay]
+test = "uv run pytest -q"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+
+[tool.uv]
+package = false

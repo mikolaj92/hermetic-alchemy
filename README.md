@@ -2,7 +2,7 @@
 
 **Multi-agent orchestration through alchemical transformation for Hermes Agent.**
 
-Spawn 10 specialized alchemical agents that work together to transmute your requirements into working software through autonomous collaboration, feedback loops, and iterative refinement.
+Spawn 8 specialized child agents under one host orchestrator that work together to transmute your requirements into working software through autonomous collaboration, feedback loops, and iterative refinement.
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Hermes](https://img.shields.io/badge/Hermes-0.6.0+-blue.svg)](https://github.com/NousResearch/hermes-agent)
@@ -12,7 +12,7 @@ Spawn 10 specialized alchemical agents that work together to transmute your requ
 ### Installation
 
 ```bash
-# Install the skill from skills.sh for Hermes Agent
+# Install directly from this GitHub repository for Hermes Agent
 npx skills add mikolaj92/hermetic-alchemy -a hermes-agent -g
 
 # Or install from the GitHub URL
@@ -37,7 +37,7 @@ use hermetic-alchemy and transmute a microservice for payments
 
 ## 🎯 What It Does
 
-Hermetic Alchemy executes the **Magnum Opus** workflow through 10 specialized agents:
+Hermetic Alchemy executes the **Magnum Opus** workflow through eight specialized child agents and the Hermes Trismegistus host orchestrator:
 
 ```
 User Request
@@ -59,7 +59,7 @@ User Request
                           └─ Exploration Loop (3 alternatives)
 ```
 
-## 🧪 The 10 Hermetic Agents
+## 🧪 Eight Child Agents and the Host Orchestrator
 
 | Agent | Element | Process | Role | Motto |
 |-------|---------|---------|------|-------|
@@ -70,7 +70,6 @@ User Request
 | **🜔 Sal** | Salt | Preservation | Database schema, migrations, optimization | "Permanence through structure" |
 | **⚪ Albedo** | Water | Ablution | Refactor code, add tests, optimize | "Purity emerges from discipline" |
 | **🜍 Sulfur** | Sulfur | Validation | Test, audit, security review | "I reveal what is hidden" |
-| **🌀 Aether** | Aether | Integration | System integration, CI/CD, infrastructure | "All is connected" |
 | **🔴 Rubedo** | Fire | Coagulation | Final integration, deployment, production readiness | "From chaos, gold emerges" |
 | **🧠 Hermes Trismegistus** | Quintessence | All processes | Grand orchestrator, coordinates all agents | "Thrice Great" |
 
@@ -111,61 +110,7 @@ User Request
 /transmute build a REST API for user management with JWT authentication
 ```
 
-**Output:**
-```
-⚗️ HERMETIC ALCHEMY INITIATED
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-⚫ NIGREDO: Analyzing...
-  → Domains: backend, auth, database
-  → Stack: FastAPI + PostgreSQL + JWT
-  → Tasks: 8 total (3 P0, 3 P1, 2 P2)
-  ✅ Complete (2.1 min)
-
-🟡 CITRINITAS: Designing...
-  → API: 12 endpoints defined
-  → DB: 4 tables designed
-  → Auth: JWT flow planned
-  ✅ Complete (3.4 min)
-
-🧪 TRANSMUTATION (Parallel)...
-  → MERCURIUS: FastAPI backend built ✅
-  → SOL: React UI built ✅
-  → SAL: PostgreSQL schema created ✅
-  ✅ Complete (11.2 min)
-
-⚪ ALBEDO: Purifying...
-  → Tests: 156 passing, 0 failing
-  → Refactored: 8 functions optimized
-  ✅ Complete (4.3 min)
-
-🜍 SULFUR: Quality Check...
-  → Security: ✅ PASS (OWASP Top 10)
-  → Performance: ✅ PASS (< 50ms avg)
-  → Accessibility: ✅ PASS (WCAG 2.1 AA)
-  → Score: 94/100
-  ✅ PASS - Proceeding to RUBEDO
-
-🔴 RUBEDO: Final Synthesis...
-  → Integration tests: ✅
-  → CI/CD pipeline: ✅
-  → Documentation: ✅
-  → Deployment ready: ✅
-  ✅ Complete (5.1 min)
-
-╔═══════════════════════════════════════════════════════════╗
-║     ⚗️ MAGNUM OPUS COMPLETE ⚗️                          ║
-║                                                         ║
-║  REST API with authentication forged successfully!     ║
-║  Total time: 26.1 minutes                              ║
-║  Score: 94/100                                          ║
-║  Iterations: 1 (no fix loops needed)                  ║
-║                                                         ║
-║  From chaos, through fire, gold has emerged!          ║
-║                                                         ║
-║          ALL HAIL HERMES TRISMEGISTUS! ✨             ║
-╚═══════════════════════════════════════════════════════════╝
-```
+**Illustrative prompt only.** Output depends on the target repository and must be proven by that repository's real local tests and deployment checks. This repo does not claim fixed timings, scores, test counts, a React SPA, or a GitHub Actions pipeline.
 
 ### Example 2: Full-Stack Blog
 ```bash
@@ -199,49 +144,49 @@ feedback_loop:
 
 agents:
   nigredo:
-    max_turns: 30
+    max_turns: 40
     timeout: 300
     
   citrinitas:
-    max_turns: 40
+    max_turns: 50
     timeout: 450
     
   mercurius:
-    max_turns: 50
+    max_turns: 60
     timeout: 600
     skills:
       - mlops/inference/outlines
       - mlops/vector-databases/qdrant
       
   sol:
-    max_turns: 50
+    max_turns: 60
     timeout: 600
     skills:
       - creative/excalidraw
       - creative/ascii-art
       
   sal:
-    max_turns: 40
+    max_turns: 50
     timeout: 400
     skills:
       - mlops/vector-databases/faiss
       
   albedo:
-    max_turns: 50
+    max_turns: 60
     timeout: 600
     skills:
       - test-driven-development
       - systematic-debugging
       
   sulfur:
-    max_turns: 45
+    max_turns: 55
     timeout: 450
     skills:
       - dogfood
       - software-development/code-review
       
   rubedo:
-    max_turns: 60
+    max_turns: 70
     timeout: 900
 
 memory:
@@ -299,12 +244,12 @@ When stuck or critical issues:
 
 ## 📦 Installation Methods
 
-### Method 1: From skills.sh (Recommended)
+### Method 1: From the GitHub repository (Recommended)
 ```bash
 npx skills add mikolaj92/hermetic-alchemy -a hermes-agent -g
 ```
 
-This is the [skills.sh](https://www.skills.sh) install path (`owner/repo`). It discovers `skills/hermetic-alchemy/SKILL.md` and installs it into `~/.hermes/skills/`.
+The `skills` CLI clones the GitHub default branch, discovers `skills/hermetic-alchemy/SKILL.md`, and installs it into `~/.hermes/skills/`. This repository does not claim a separate skills.sh registry page.
 
 ### Method 2: From GitHub URL
 ```bash
@@ -351,12 +296,11 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 ## 📚 Related Skills
 
 - [`hermes-agent`](https://github.com/NousResearch/hermes-agent) - Spawn full Hermes processes
-- [`subagent-driven-development`](https://github.com/NousResearch/hermes-agent/tree/main/skills/autonomous-ai-agents) - Manual multi-agent workflows
+- [`subagent-driven-development`](https://github.com/NousResearch/hermes-agent/tree/main/optional-skills/software-development/subagent-driven-development) - Manual multi-agent workflows
 
 ## 🗣️ Support
 
 - **Issues**: [GitHub Issues](https://github.com/mikolaj92/hermetic-alchemy/issues)
-- **Discussions**: [GitHub Discussions](https://github.com/mikolaj92/hermetic-alchemy/discussions)
 
 ---
 
