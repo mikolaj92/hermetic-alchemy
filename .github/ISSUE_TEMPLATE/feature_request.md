@@ -2,7 +2,7 @@
 name: Feature Request
 about: Suggest an enhancement or new feature for Hermetic Alchemy
 title: '[FEATURE] '
-labels: enhancement, feature-request
+labels: enhancement
 assignees: ''
 ---
 
@@ -81,7 +81,7 @@ Add any other context, screenshots, or mockups about the feature request here.
 
 ---
 
-**Remember:** Check existing [Feature Requests](https://github.com/mikolaj92/hermetic-alchemy/issues?q=is%3Aissue+is%3Aopen+label%3Afeature-request) before submitting!
+**Remember:** Check existing [Feature Requests](https://github.com/mikolaj92/hermetic-alchemy/issues?q=is%3Aissue+is%3Aopen+label%3Aenhancement) before submitting!
 
 ---
 

@@ -1,35 +1,40 @@
 name: hermetic-alchemy
-version: 1.0.1
-description: Multi-agent orchestration through alchemical transformation - the Magnum Opus workflow through 10 specialized agents (Nigredo, Citrinitas, Mercurius, Sol, Sal, Albedo, Sulfur, Aether, Rubedo, Hermes Trismegistus) for autonomous software development with feedback loops
+version: 1.0.2
+description: Multi-agent orchestration through alchemical transformation. The Magnum
+  Opus workflow through 8 specialized child agents coordinated by the host. Trigger
+  by typing /transmute [project] or /hermetic [project]. Spawns Nigredo (analysis),
+  Citrinitas (design), Mercurius (backend), Sol (frontend), Sal (database), Albedo
+  (refinement), Sulfur (quality), and Rubedo (final); the host is Hermes Trismegistus
+  for autonomous software development with feedback loops. Use when the user wants
+  to transmute, forge, or create software.
 author: Mikołaj (mikolaj92)
 license: MIT
 homepage: https://github.com/mikolaj92/hermetic-alchemy
 repository: https://github.com/mikolaj92/hermetic-alchemy
 tags:
-  - multi-agent
-  - orchestration
-  - autonomous
-  - hermetic
-  - alchemy
-  - magnum-opus
-  - feedback-loop
-  - slash-command
-  - transmute
-  - forge
-  - agent-swarm
-  - autonomous-development
-  - quality-gates
+- multi-agent
+- orchestration
+- autonomous
+- hermetic
+- alchemy
+- magnum-opus
+- feedback-loop
+- slash-command
+- transmute
+- forge
+- agent-swarm
+- autonomous-development
+- quality-gates
 category: autonomous-ai-agents
 triggers:
-  - "/transmute"
-  - "/hermetic"
-  - "transmute"
-  - "hermetic alchemy"
-  - "forge software"
-  - "start the magnum opus"
-hermes_version: ">=0.6.0"
+- /transmute
+- /hermetic
+- transmute
+- hermetic alchemy
+- forge software
+- start the magnum opus
+hermes_version: '>=0.6.0'
 dependencies: []
 related_skills:
-  - subagent-driven-development
-  - hermes-agent
-  - multi-agent-harness
+- subagent-driven-development
+- hermes-agent

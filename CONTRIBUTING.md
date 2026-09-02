@@ -80,8 +80,7 @@ hermetic-alchemy/
 │       ├── SKILL.md          # Main skill file
 │       └── skill.yaml        # Skill manifest
 ├── examples/                 # Usage examples
-├── .github/                  # GitHub configurations
-│   ├── workflows/
+.github/                  # GitHub issue templates
 │   └── ISSUE_TEMPLATE/
 ├── README.md                 # Main documentation
 ├── LICENSE                   # MIT License
@@ -130,13 +129,15 @@ Test your changes with various commands:
 transmute analyze and fix the security issues in my code
 ```
 
-### Automated Testing
+### Automated Contract Test
 
-We welcome test additions. Tests should cover:
-- Agent orchestration
-- Error handling
-- Edge cases
-- Integration with Hermes
+Run the one local, fail-closed contract gate:
+
+```bash
+uv run pytest -q
+```
+
+It requires PyYAML and validates YAML parsing plus `name`, `description`, and `version` parity between `SKILL.md` and `skill.yaml`. Missing dependencies fail instead of activating a line-parser fallback.
 
 ## Submitting Changes
 
@@ -158,7 +159,7 @@ We welcome test additions. Tests should cover:
    - Link to related issues
    - Describe changes
    - Add screenshots if applicable
-   - Ensure CI passes
+   - Run `uv run pytest -q` locally
 
 ### PR Template
 
@@ -233,7 +234,6 @@ Example: `1.0.0` → `1.1.0` → `1.1.1` → `2.0.0`
 ## Getting Help
 
 - **Issues**: [GitHub Issues](https://github.com/mikolaj92/hermetic-alchemy/issues)
-- **Discussions**: [GitHub Discussions](https://github.com/mikolaj92/hermetic-alchemy/discussions)
 - **Email**: mikolaj92@users.noreply.github.com
 
 ## Recognition
