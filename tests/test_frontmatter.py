@@ -10,10 +10,29 @@ def run_validator(*args: str) -> subprocess.CompletedProcess[str]:
     return subprocess.run([sys.executable, str(VALIDATOR), *args], text=True, capture_output=True, check=False)
 
 
-def test_public_skill_contract_is_consistent() -> None:
+def test_public_skill_contract_is_consistent(tmp_path: Path) -> None:
     result = run_validator()
     assert result.returncode == 0, result.stderr
     assert "hermetic-alchemy 1.0.2" in result.stdout
+
+    text = (ROOT / "skills/hermetic-alchemy/SKILL.md").read_text(encoding="utf-8")
+    skill = tmp_path / "SKILL.md"
+    manifest = ROOT / "skills/hermetic-alchemy/skill.yaml"
+    for footer, diagnostic in (
+        (
+            "**Version:** 1.0.0",
+            "SKILL.md footer version '1.0.0' does not match frontmatter version '1.0.2'",
+        ),
+        ("", "SKILL.md must contain exactly one **Version:** footer declaration"),
+        (
+            "**Version:** 1.0.2\n**Version:** 1.0.2",
+            "SKILL.md must contain exactly one **Version:** footer declaration",
+        ),
+    ):
+        skill.write_text(text.replace("**Version:** 1.0.2", footer), encoding="utf-8")
+        result = run_validator("--skill", str(skill), "--manifest", str(manifest))
+        assert result.returncode != 0, footer
+        assert diagnostic in result.stderr
 
 
 def test_invalid_unquoted_markdown_alias_fails_closed(tmp_path: Path) -> None:
