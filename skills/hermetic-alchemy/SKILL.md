@@ -387,7 +387,7 @@ nigredo_result = delegate_task(
     Motto: "In chaos, I find order"
     """,
     toolsets=["file", "web"],
-    max_iterations=30
+    max_iterations=40
 )
 ```
 
@@ -410,7 +410,7 @@ citrinitas_result = delegate_task(
     """,
     context=f"Nigredo analysis: {nigredo_result['summary']}",
     toolsets=["file", "web"],
-    max_iterations=40
+    max_iterations=50
 )
 ```
 
@@ -434,7 +434,7 @@ transmutation_result = delegate_task(
             Output: Backend code with tests
             """,
             "toolsets": ["terminal", "file", "web"],
-            "max_iterations": 50
+            "max_iterations": 60
         },
         {
             "goal": f"""
@@ -448,7 +448,7 @@ transmutation_result = delegate_task(
             Output: Frontend code with accessibility
             """,
             "toolsets": ["terminal", "file"],
-            "max_iterations": 50
+            "max_iterations": 60
         },
         {
             "goal": f"""
@@ -462,7 +462,7 @@ transmutation_result = delegate_task(
             Output: Database schema + migrations
             """,
             "toolsets": ["terminal", "file"],
-            "max_iterations": 40
+            "max_iterations": 50
         }
     ]
 )
@@ -491,7 +491,7 @@ albedo_result = delegate_task(
     Motto: "Purity emerges from discipline"
     """,
     toolsets=["terminal", "file"],
-    max_iterations=50
+    max_iterations=60
 )
 ```
 
@@ -526,11 +526,11 @@ sulfur_result = delegate_task(
     Motto: "I reveal what is hidden"
     """,
     toolsets=["terminal", "file", "web"],
-    max_iterations=45
+    max_iterations=55
 )
 ```
 
-### Phase 7: Feedback Loop (If Needed)
+### Phase 7: Feedback Loop (If Needed; helpers have separate task budgets)
 
 ```python
 sulfur_verdict = json.loads(read_file(".hermetic-lab/athanor/sulfur-check.json"))
@@ -635,7 +635,7 @@ rubedo_result = delegate_task(
         "sulfur": sulfur_result
     },
     toolsets=["terminal", "file", "web"],
-    max_iterations=60
+    max_iterations=70
 )
 ```
 
