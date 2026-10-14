@@ -808,6 +808,6 @@ In software development:
 
 **Author:** Mikołaj (mikolaj92)  
 **License:** MIT  
-**Version:** 1.0.0
+**Version:** 1.0.2
 
 *"As above, so below. As within, so without."*

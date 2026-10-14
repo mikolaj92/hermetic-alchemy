@@ -4,6 +4,7 @@
 from __future__ import annotations
 
 import argparse
+import re
 from pathlib import Path
 
 import yaml
@@ -46,6 +47,16 @@ def validate(skill_path: Path, manifest_path: Path) -> None:
             raise SystemExit(f"SKILL.md frontmatter is missing a string {key}")
         if manifest.get(key) != value:
             raise SystemExit(f"skill.yaml {key} does not match SKILL.md")
+    body = skill_path.read_text(encoding="utf-8").split("\n---\n", 1)[1]
+    footer_versions = re.findall(r"^[ \t]*\*\*Version:\*\*[ \t]*(.*)$", body, re.MULTILINE)
+    if len(footer_versions) != 1:
+        raise SystemExit("SKILL.md must contain exactly one **Version:** footer declaration")
+    footer_version = footer_versions[0].strip()
+    if footer_version != skill["version"]:
+        raise SystemExit(
+            f"SKILL.md footer version {footer_version!r} does not match "
+            f"frontmatter version {skill['version']!r}"
+        )
     if skill["name"] != "hermetic-alchemy":
         raise SystemExit(f"unexpected skill name: {skill['name']}")
     print(f"ok: {skill['name']} {skill['version']}")
