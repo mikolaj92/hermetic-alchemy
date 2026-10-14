@@ -530,9 +530,7 @@ sulfur_result = delegate_task(
 )
 ```
 
-### Phase 7: Feedback Loop (If Needed)
-
-Turn-limit synchronization covers only the eight main delegations; Phase 7 helper tasks retain separate task budgets.
+### Phase 7: Feedback Loop (If Needed; helpers have separate task budgets)
 
 ```python
 sulfur_verdict = json.loads(read_file(".hermetic-lab/athanor/sulfur-check.json"))
