@@ -541,15 +541,15 @@ if sulfur_verdict["status"] == "FAIL":
         # Quick fix iterations
         for iteration in range(3):
             albedo_fix = delegate_task(
-                goal=f"Fix these issues: {sulfur_verdict['issues']}",
+                goal=f"You are ALBEDO - Fix these issues: {sulfur_verdict['issues']}",
                 toolsets=["terminal", "file"],
-                max_iterations=50
+                max_iterations=60
             )
             
             sulfur_recheck = delegate_task(
-                goal="Re-run quality audit",
+                goal="You are SULFUR - Re-run quality audit",
                 toolsets=["terminal", "file", "web"],
-                max_iterations=30
+                max_iterations=55
             )
             
             if sulfur_recheck["status"] == "PASS":

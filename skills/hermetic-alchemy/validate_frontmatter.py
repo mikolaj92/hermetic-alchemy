@@ -4,6 +4,7 @@
 from __future__ import annotations
 
 import argparse
+import ast
 import re
 from pathlib import Path
 
@@ -38,6 +39,118 @@ def load_frontmatter(path: Path) -> dict[str, object]:
     return data
 
 
+def validate_agents(body: str) -> None:
+    cards = re.findall(
+        r"^### [^\n]*?([A-Z]+) - [^\n]+(?:(?!^### ).)*?\*\*Max turns:\*\* (\d+)",
+        body,
+        re.MULTILINE | re.DOTALL,
+    )
+    limits = {}
+    for name, turns in cards:
+        if name in limits:
+            raise SystemExit(f"SKILL.md duplicate agent card: {name}")
+        limits[name] = int(turns)
+    configurations = []
+    for block in re.findall(r"^```yaml\n(.*?)^```", body, re.MULTILINE | re.DOTALL):
+        try:
+            configuration = yaml.safe_load(block)
+        except yaml.YAMLError as exc:
+            raise SystemExit(f"SKILL.md configuration is invalid YAML: {exc}") from exc
+        if isinstance(configuration, dict) and "agents" in configuration:
+            configurations.append(configuration["agents"])
+    if len(configurations) != 1 or not isinstance(configurations[0], dict):
+        raise SystemExit("SKILL.md must contain exactly one agents configuration")
+    configured = configurations[0]
+    if {name.lower() for name in limits} != set(configured):
+        raise SystemExit("SKILL.md agents configuration does not match agent cards")
+    for name, turns in limits.items():
+        details = configured[name.lower()]
+        if (
+            not isinstance(details, dict)
+            or type(details.get("max_turns")) is not int
+            or details["max_turns"] != turns
+            or turns <= 0
+        ):
+            raise SystemExit(f"SKILL.md {name} max_turns does not match agent card")
+    delegated = set()
+    helpers = {
+        "Generate 3 alternative architectural approaches",
+        "Implement approach ",
+        "Score each experiment on correctness, performance, maintainability",
+        "Merge winning approach: ",
+    }
+    for block in re.findall(r"^```python\n(.*?)^```", body, re.MULTILINE | re.DOTALL):
+        try:
+            tree = ast.parse(block)
+        except SyntaxError as exc:
+            raise SystemExit(f"SKILL.md protocol syntax is invalid: {exc}") from exc
+        for call in ast.walk(tree):
+            if not isinstance(call, ast.Call) or not isinstance(call.func, ast.Name):
+                continue
+            if call.func.id != "delegate_task":
+                continue
+            if call.args or any(keyword.arg is None for keyword in call.keywords):
+                raise SystemExit("SKILL.md delegation has ambiguous arguments")
+            fields = {}
+            for keyword in call.keywords:
+                if keyword.arg in fields:
+                    raise SystemExit(f"SKILL.md delegation has duplicate {keyword.arg}")
+                fields[keyword.arg] = keyword.value
+            tasks = [fields]
+            if "tasks" in fields:
+                if "goal" in fields or "max_iterations" in fields:
+                    raise SystemExit("SKILL.md parallel delegation has ambiguous limits")
+                entries = fields["tasks"]
+                if isinstance(entries, ast.ListComp):
+                    entries = [entries.elt]
+                elif isinstance(entries, ast.List):
+                    entries = entries.elts
+                else:
+                    raise SystemExit("SKILL.md parallel tasks must be a static list")
+                tasks = []
+                for entry in entries:
+                    if not isinstance(entry, ast.Dict):
+                        raise SystemExit("SKILL.md parallel task must be a mapping")
+                    task = {}
+                    for key, value in zip(entry.keys, entry.values):
+                        if not isinstance(key, ast.Constant) or not isinstance(key.value, str):
+                            raise SystemExit("SKILL.md parallel task has ambiguous fields")
+                        if key.value in task:
+                            raise SystemExit(f"SKILL.md parallel task has duplicate {key.value}")
+                        task[key.value] = value
+                    tasks.append(task)
+            for task in tasks:
+                goal = task.get("goal")
+                if isinstance(goal, ast.Constant) and isinstance(goal.value, str):
+                    text = goal.value
+                elif isinstance(goal, ast.JoinedStr):
+                    text = "".join(
+                        part.value for part in goal.values if isinstance(part, ast.Constant)
+                    )
+                else:
+                    raise SystemExit("SKILL.md delegation goal must identify a static agent")
+                names = re.findall(r"\bYou are\s+([A-Za-z_]+)\b", text)
+                if not names and text in helpers:
+                    continue
+                if len(names) != 1:
+                    raise SystemExit("SKILL.md delegation must identify exactly one agent")
+                name = names[0]
+                if name not in limits:
+                    raise SystemExit(f"SKILL.md delegation has unknown agent: {name}")
+                budget = task.get("max_iterations")
+                if (
+                    not isinstance(budget, ast.Constant)
+                    or type(budget.value) is not int
+                    or budget.value != limits[name]
+                ):
+                    raise SystemExit(
+                        f"SKILL.md {name} delegation max_iterations must equal {limits[name]}"
+                    )
+                delegated.add(name)
+    if delegated != set(limits):
+        raise SystemExit(f"SKILL.md agents missing delegations: {sorted(set(limits) - delegated)}")
+
+
 def validate(skill_path: Path, manifest_path: Path) -> None:
     skill = load_frontmatter(skill_path)
     manifest = load_mapping(manifest_path)
@@ -57,6 +170,7 @@ def validate(skill_path: Path, manifest_path: Path) -> None:
             f"SKILL.md footer version {footer_version!r} does not match "
             f"frontmatter version {skill['version']!r}"
         )
+    validate_agents(body)
     if skill["name"] != "hermetic-alchemy":
         raise SystemExit(f"unexpected skill name: {skill['name']}")
     print(f"ok: {skill['name']} {skill['version']}")
