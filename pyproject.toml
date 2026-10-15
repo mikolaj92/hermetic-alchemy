@@ -8,7 +8,7 @@ dependencies = ["pyyaml>=6.0"]
 dev = ["pytest>=8.0"]
 
 [tool.lokay]
-test = "uv run pytest -q"
+test = "uv run --locked pytest -q"
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
