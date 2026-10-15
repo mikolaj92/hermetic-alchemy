@@ -75,9 +75,9 @@ def validate_agents(body: str) -> None:
     delegated = set()
     helpers = {
         "Generate 3 alternative architectural approaches",
-        "Implement approach ",
+        "Implement approach \0",
         "Score each experiment on correctness, performance, maintainability",
-        "Merge winning approach: ",
+        "Merge winning approach: \0",
     }
     for block in re.findall(r"^```python\n(.*?)^```", body, re.MULTILINE | re.DOTALL):
         try:
@@ -125,11 +125,12 @@ def validate_agents(body: str) -> None:
                     text = goal.value
                 elif isinstance(goal, ast.JoinedStr):
                     text = "".join(
-                        part.value for part in goal.values if isinstance(part, ast.Constant)
+                        part.value if isinstance(part, ast.Constant) else "\0"
+                        for part in goal.values
                     )
                 else:
                     raise SystemExit("SKILL.md delegation goal must identify a static agent")
-                names = re.findall(r"\bYou are\s+([A-Za-z_]+)\b", text)
+                names = re.findall(r"\bYou are\s+(\S+)", text)
                 if not names and text in helpers:
                     continue
                 if len(names) != 1:
