@@ -74,24 +74,20 @@ def test_agent_roster_and_turn_limits_have_one_truth() -> None:
     config = yaml.safe_load(config_text.replace("```yaml", "").replace("```", ""))["agents"]
     assert set(headers) == {"nigredo", "citrinitas", "mercurius", "sol", "sal", "albedo", "sulfur", "rubedo"}
     assert {name: details["max_turns"] for name, details in config.items()} == headers
+    result = run_validator()
+    assert result.returncode == 0, result.stderr
     protocol = text.split("### Phase 2:", 1)[1].split("## Workspace Structure", 1)[0]
-    delegations = re.findall(
-        r'You are ([A-Z]+) - [\s\S]*?["\']?max_iterations["\']?\s*[:=]\s*(\d+)',
-        protocol,
-    )
-    assert len(delegations) == len(headers)
-    assert {name.lower(): int(turns) for name, turns in delegations} == headers
     helpers = protocol.split("### Phase 7:", 1)[1].split("### Phase 8:", 1)[0]
     assert "separate task budgets" in helpers
     assert [int(turns) for turns in re.findall(r'max_iterations"?\s*[:=]\s*(\d+)', helpers)] == [
-        50, 30, 40, 30, 30, 20
+        60, 55, 40, 30, 30, 20
     ]
     assert "this role is not delegated as a child" in text
     assert "AETHER" not in text
 
 
 def test_public_docs_contain_no_unsourced_results_or_dead_surfaces() -> None:
-    tracked = [ROOT / "README.md", ROOT / "CONTRIBUTING.md", *sorted((ROOT / "examples").glob("*.md"))]
+    tracked = [ROOT / "skills/hermetic-alchemy/SKILL.md", ROOT / "README.md", ROOT / "CONTRIBUTING.md", *sorted((ROOT / "examples").glob("*.md"))]
     text = "\n".join(path.read_text() for path in tracked)
     for stale in ("156 tests", "234 tests", "94/100", "53.1 minutes", "GitHub Discussions", "workflows/", "Ensure CI passes"):
         assert stale not in text
