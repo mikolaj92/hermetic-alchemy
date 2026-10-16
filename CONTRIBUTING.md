@@ -78,10 +78,17 @@ hermetic-alchemy/
 ├── skills/
 │   └── hermetic-alchemy/
 │       ├── SKILL.md          # Main skill file
-│       └── skill.yaml        # Skill manifest
+│       ├── skill.yaml        # Skill manifest
+│       └── validate_frontmatter.py
 ├── examples/                 # Usage examples
-.github/                  # GitHub issue templates
+├── .github/                  # GitHub issue templates
 │   └── ISSUE_TEMPLATE/
+│       ├── bug_report.md
+│       └── feature_request.md
+├── tests/
+│   └── test_frontmatter.py
+├── pyproject.toml
+├── uv.lock
 ├── README.md                 # Main documentation
 ├── LICENSE                   # MIT License
 └── CONTRIBUTING.md           # This file
@@ -95,7 +102,7 @@ The main skill file (`SKILL.md`) uses YAML frontmatter:
 ---
 name: hermetic-alchemy
 description: ...
-version: 1.0.0
+version: 1.0.2
 author: Mikołaj (mikolaj92)
 license: MIT
 metadata:
