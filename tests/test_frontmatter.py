@@ -1,3 +1,4 @@
+import re
 import subprocess
 import sys
 from pathlib import Path
@@ -16,6 +17,31 @@ def test_public_skill_contract_is_consistent(tmp_path: Path) -> None:
     assert "hermetic-alchemy 1.0.2" in result.stdout
 
     text = (ROOT / "skills/hermetic-alchemy/SKILL.md").read_text(encoding="utf-8")
+    verdict_paths = []
+    for document in (ROOT / "skills/hermetic-alchemy/SKILL.md", ROOT / "README.md"):
+        contents = document.read_text(encoding="utf-8")
+        directories = []
+        occurrences = 0
+        for line in contents.splitlines():
+            if line.strip() == ".hermetic-lab/":
+                directories = [".hermetic-lab"]
+            entry = re.match(r"^([ │]*)(?:├── |└── )(\S+)", line)
+            if entry:
+                depth = len(entry[1]) // 4
+                directories = directories[:depth + 1]
+                if entry[2].endswith("/"):
+                    directories.append(entry[2].rstrip("/"))
+                elif entry[2] == "sulfur-check.json":
+                    verdict_paths.append("/".join([*directories, entry[2]]))
+                    occurrences += 1
+            else:
+                paths = re.findall(r"[\w./-]*sulfur-check\.json", line)
+                verdict_paths.extend(paths)
+                occurrences += len(paths)
+        assert occurrences == contents.count("sulfur-check.json"), document
+        assert occurrences > 0, document
+    assert set(verdict_paths) == {".hermetic-lab/athanor/sulfur-check.json"}, verdict_paths
+
     skill = tmp_path / "SKILL.md"
     manifest = ROOT / "skills/hermetic-alchemy/skill.yaml"
     for footer, diagnostic in (

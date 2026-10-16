@@ -656,13 +656,13 @@ rubedo_result = delegate_task(
 │   │   ├── api-contracts.md
 │   │   └── database-schema.md
 │   ├── albedo-refined/              # Purified code
-│   ├── sulfur-check.json            # Quality verdict
 │   └── rubedo-manifest/             # Final deliverables
 │       ├── integration-tests/
 │       ├── ci-cd/
 │       ├── docs/
 │       └── deployment/
 └── athanor/                         # Furnace (logs)
+    ├── sulfur-check.json
     ├── session-logs/
     └── experiment-logs/
 ```
