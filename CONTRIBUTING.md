@@ -77,11 +77,13 @@ hermes chat
 hermetic-alchemy/
 ├── skills/
 │   └── hermetic-alchemy/
-│       ├── SKILL.md          # Main skill file
-│       ├── skill.yaml        # Skill manifest
+│       ├── SKILL.md
+│       ├── skill.yaml
 │       └── validate_frontmatter.py
-├── examples/                 # Usage examples
-├── .github/                  # GitHub issue templates
+├── examples/
+│   ├── full-stack-app.md
+│   └── rest-api.md
+├── .github/
 │   └── ISSUE_TEMPLATE/
 │       ├── bug_report.md
 │       └── feature_request.md
@@ -89,9 +91,13 @@ hermetic-alchemy/
 │   └── test_frontmatter.py
 ├── pyproject.toml
 ├── uv.lock
-├── README.md                 # Main documentation
-├── LICENSE                   # MIT License
-└── CONTRIBUTING.md           # This file
+├── .gitignore
+├── AUTHORS.md
+├── CHANGELOG.md
+├── CONTRIBUTORS.md
+├── README.md
+├── LICENSE
+└── CONTRIBUTING.md
 ```
 
 ### Modifying SKILL.md
