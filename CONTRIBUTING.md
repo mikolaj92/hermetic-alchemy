@@ -77,14 +77,27 @@ hermes chat
 hermetic-alchemy/
 ├── skills/
 │   └── hermetic-alchemy/
-│       ├── SKILL.md          # Main skill file
-│       └── skill.yaml        # Skill manifest
-├── examples/                 # Usage examples
-.github/                  # GitHub issue templates
+│       ├── SKILL.md
+│       ├── skill.yaml
+│       └── validate_frontmatter.py
+├── examples/
+│   ├── full-stack-app.md
+│   └── rest-api.md
+├── .github/
 │   └── ISSUE_TEMPLATE/
-├── README.md                 # Main documentation
-├── LICENSE                   # MIT License
-└── CONTRIBUTING.md           # This file
+│       ├── bug_report.md
+│       └── feature_request.md
+├── tests/
+│   └── test_frontmatter.py
+├── pyproject.toml
+├── uv.lock
+├── .gitignore
+├── AUTHORS.md
+├── CHANGELOG.md
+├── CONTRIBUTORS.md
+├── README.md
+├── LICENSE
+└── CONTRIBUTING.md
 ```
 
 ### Modifying SKILL.md
@@ -95,7 +108,7 @@ The main skill file (`SKILL.md`) uses YAML frontmatter:
 ---
 name: hermetic-alchemy
 description: ...
-version: 1.0.0
+version: 1.0.2
 author: Mikołaj (mikolaj92)
 license: MIT
 metadata:
