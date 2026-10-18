@@ -47,29 +47,8 @@ By participating in this project, you agree to maintain a respectful and inclusi
 
 ## Development Setup
 
-### Prerequisites
-
-- Hermes Agent 0.6.0 or higher
-- Python 3.11+
-- Git
-- (Optional) Docker
-
-### Local Testing
-
-```bash
-# Clone your fork
-git clone https://github.com/YOUR_USERNAME/hermetic-alchemy.git
-cd hermetic-alchemy
-
-# Install the skill locally (symlink)
-cp -r skills/hermetic-alchemy ~/.hermes/skills/
-
-# Start Hermes
-hermes chat
-
-# Test the skill
-/transmute build a simple TODO API
-```
+See [README.md](README.md) for requirements, installation, and usage.
+Local contract checks require Python 3.11+ and uv.
 
 ## Skill Structure
 
@@ -77,14 +56,27 @@ hermes chat
 hermetic-alchemy/
 ├── skills/
 │   └── hermetic-alchemy/
-│       ├── SKILL.md          # Main skill file
-│       └── skill.yaml        # Skill manifest
-├── examples/                 # Usage examples
-.github/                  # GitHub issue templates
+│       ├── SKILL.md
+│       ├── skill.yaml
+│       └── validate_frontmatter.py
+├── examples/
+│   ├── full-stack-app.md
+│   └── rest-api.md
+├── .github/
 │   └── ISSUE_TEMPLATE/
-├── README.md                 # Main documentation
-├── LICENSE                   # MIT License
-└── CONTRIBUTING.md           # This file
+│       ├── bug_report.md
+│       └── feature_request.md
+├── tests/
+│   └── test_frontmatter.py
+├── pyproject.toml
+├── uv.lock
+├── .gitignore
+├── AUTHORS.md
+├── CHANGELOG.md
+├── CONTRIBUTORS.md
+├── README.md
+├── LICENSE
+└── CONTRIBUTING.md
 ```
 
 ### Modifying SKILL.md
@@ -95,7 +87,6 @@ The main skill file (`SKILL.md`) uses YAML frontmatter:
 ---
 name: hermetic-alchemy
 description: ...
-version: 1.0.0
 author: Mikołaj (mikolaj92)
 license: MIT
 metadata:
@@ -108,36 +99,21 @@ metadata:
 When modifying:
 1. Keep YAML frontmatter valid (the skills.sh CLI rejects the skill if `name`/`description` cannot be parsed)
 2. Quote `description` when it contains YAML-special characters (`*`, `:`, `#`)
-3. Update version number (semver)
+3. Keep the actual version consistent between SKILL.md frontmatter, its footer, and skill.yaml
 4. Add clear descriptions
 5. Include examples
 
 ## Testing
-
-### Manual Testing
-
-Test your changes with various commands:
-
-```bash
-# Test basic functionality
-/transmute build a REST API
-
-# Test complex scenarios
-/hermetic create a full-stack app with React and FastAPI
-
-# Test edge cases
-transmute analyze and fix the security issues in my code
-```
 
 ### Automated Contract Test
 
 Run the one local, fail-closed contract gate:
 
 ```bash
-uv run pytest -q
+uv run --locked pytest -q
 ```
 
-It requires PyYAML and validates YAML parsing plus `name`, `description`, and `version` parity between `SKILL.md` and `skill.yaml`. Missing dependencies fail instead of activating a line-parser fallback.
+The gate in `pyproject.toml` uses locked dependencies, including PyYAML. It checks manifest parity, the version footer, agent configuration, and delegation limits. Missing dependencies fail instead of activating a line-parser fallback.
 
 ## Submitting Changes
 
@@ -159,7 +135,7 @@ It requires PyYAML and validates YAML parsing plus `name`, `description`, and `v
    - Link to related issues
    - Describe changes
    - Add screenshots if applicable
-   - Run `uv run pytest -q` locally
+   - Run the local contract gate above
 
 ### PR Template
 
