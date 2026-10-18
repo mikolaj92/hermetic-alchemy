@@ -113,7 +113,7 @@ Run the one local, fail-closed contract gate:
 uv run --locked pytest -q
 ```
 
-The gate in `pyproject.toml` uses locked dependencies, including PyYAML. It checks manifest parity, the version footer, agent configuration, and delegation limits. Missing dependencies fail instead of activating a line-parser fallback.
+The gate in `[tool.lokay].test` in `pyproject.toml` uses locked dependencies, including PyYAML. Its validator checks manifest parity, the version footer, agent configuration, delegation limits, and Sulfur verdict paths in SKILL.md and README.md. Missing dependencies fail the gate.
 
 ## Submitting Changes
 
