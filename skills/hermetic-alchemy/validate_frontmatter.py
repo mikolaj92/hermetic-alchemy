@@ -152,6 +152,35 @@ def validate_agents(body: str) -> None:
         raise SystemExit(f"SKILL.md agents missing delegations: {sorted(set(limits) - delegated)}")
 
 
+def validate_verdict_paths(documents: dict[str, str]) -> None:
+    expected = ".hermetic-lab/athanor/sulfur-check.json"
+    for name, contents in documents.items():
+        directories = []
+        paths = []
+        tree_paths = []
+        for line in contents.splitlines():
+            if line.strip() == ".hermetic-lab/":
+                directories = [".hermetic-lab"]
+            entry = re.match(r"^([ │]*)(?:├── |└── )(\S+)", line)
+            if entry:
+                depth = len(entry[1]) // 4
+                directories = directories[:depth + 1]
+                if entry[2].endswith("/"):
+                    directories.append(entry[2].rstrip("/"))
+                elif entry[2] == "sulfur-check.json":
+                    path = "/".join([*directories, entry[2]])
+                    paths.append(path)
+                    tree_paths.append(path)
+            else:
+                paths.extend(re.findall(r"[\w./-]*sulfur-check\.json", line))
+        if (
+            tree_paths != [expected]
+            or len(paths) != contents.count("sulfur-check.json")
+            or set(paths) != {expected}
+        ):
+            raise SystemExit(f"{name} Sulfur verdict paths must all be {expected}")
+
+
 def validate(skill_path: Path, manifest_path: Path) -> None:
     skill = load_frontmatter(skill_path)
     manifest = load_mapping(manifest_path)
@@ -172,6 +201,10 @@ def validate(skill_path: Path, manifest_path: Path) -> None:
             f"frontmatter version {skill['version']!r}"
         )
     validate_agents(body)
+    validate_verdict_paths({
+        "SKILL.md": skill_path.read_text(encoding="utf-8"),
+        "README.md": (ROOT.parents[1] / "README.md").read_text(encoding="utf-8"),
+    })
     if skill["name"] != "hermetic-alchemy":
         raise SystemExit(f"unexpected skill name: {skill['name']}")
     print(f"ok: {skill['name']} {skill['version']}")
